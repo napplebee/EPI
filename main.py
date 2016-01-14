@@ -1,11 +1,9 @@
-from parity import test_parity
-from robot import prove, get_battery_capacity
-
-
 def main():
-    for i in range(0, 1000000):
-        steps = generate_input()
-        prove(get_battery_capacity(steps), steps)
+    from bigint import BigInt
+    a = BigInt("123")
+    b = BigInt("-959")
+    c = a.multiply(b)
+    print(c)
     print("Cya!")
 
 
