@@ -1,3 +1,4 @@
+# 5.1
 def get_parity(input_num):
     bin_num = bin(input_num)
     parity = 0
