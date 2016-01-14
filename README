@@ -1,0 +1,4 @@
+My own try to solve all problems from EPI.
+Please note that I did my best to keep the code lang-agnostic
+    so sometimes it is not that pythonic and even not optimal (from Python perspective).
+But it should be easily portable to other lang.
