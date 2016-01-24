@@ -1,6 +1,7 @@
 def sort(array):
     _internal_sort(array, 0, len(array))
 
+
 def _internal_sort(array, lo, hi):
     in_place = _partition(array, lo, hi)
     _internal_sort(array, lo, in_place-1)
