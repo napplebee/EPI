@@ -20,5 +20,3 @@ class MinHeap(object):
 
     def _swim(self, index=None):
         index = self.count() if index is None else index
-
-
