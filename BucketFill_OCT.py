@@ -17,6 +17,7 @@ resolutions.
 
 Please use python3 to complete this assignment.
 """
+import Queue as q
 
 
 class Canvas(object):
@@ -41,7 +42,25 @@ class Solution1(Canvas):
     # TODO write documentation
 
     def fill(self, x, y, color):
-        pass  # TODO write implementation
+        pixel = self.pixels[y][x]
+        if pixel == color:
+            return
+        initial_color = pixel
+        pixels_to_process = q.Queue()
+        pixels_to_process.put((x, y))
+        while pixels_to_process.not_empty():
+            x, y = pixels_to_process.get()
+            if not self._has_pixel_at(x, y) or self.pixels[y][x] != initial_color:
+                continue
+            self.pixels[x][y] = color
+            pixels_to_process.put((x-1, y-1))
+            pixels_to_process.put((x+1, y+1))
+            pixels_to_process.put((x-1, y+1))
+            pixels_to_process.put((x+1, y-1))
+
+    def _has_pixel_at(self, x, y):
+        # if len(self.pixels)
+        pass
 
 
 class Solution2(Canvas):
