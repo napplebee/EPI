@@ -15,10 +15,12 @@ def _partition(array, lo, hi):
     while True:
         while array[i] < array[pivot]:
             i += 1
-            if i == hi: break
+            if i == hi:
+                break
         while array[j] > array[pivot]:
             j += 1
-            if j == lo: break
+            if j == lo:
+                break
         if i >= j:
             break
         _swap(array, i, j)
