@@ -39,35 +39,62 @@ class Canvas(object):
 
 
 class Solution1(Canvas):
-    # TODO write documentation
+    """
+    The key point of this solution is a queue.
+    It's similar to in-order tree traversal:
+        * inspect pixel, then go to his neighbours.
+
+    Detailed explanation:
+        * put pixel at given coordinates into queue
+        * while queue is not empty get next pixel from there, inspect it and
+          if initial color (the color of pixel where we started) equals to current pixel's color
+          then we should change its color. After that put all his neighbours into queue.
+    """
 
     def fill(self, x, y, color):
-        pixel = self.pixels[y][x]
+        pixel = self.pixels[x][y]
         if pixel == color:
             return
         initial_color = pixel
         pixels_to_process = q.Queue()
         pixels_to_process.put((x, y))
-        while pixels_to_process.not_empty():
+        while not pixels_to_process.empty():
             x, y = pixels_to_process.get()
-            if not self._has_pixel_at(x, y) or self.pixels[y][x] != initial_color:
+            if not self._has_pixel_at(x, y) or self.pixels[x][y] != initial_color:
                 continue
             self.pixels[x][y] = color
-            pixels_to_process.put((x-1, y-1))
-            pixels_to_process.put((x+1, y+1))
-            pixels_to_process.put((x-1, y+1))
-            pixels_to_process.put((x+1, y-1))
+            pixels_to_process.put((x, y-1))
+            pixels_to_process.put((x, y+1))
+            pixels_to_process.put((x-1, y))
+            pixels_to_process.put((x+1, y))
 
     def _has_pixel_at(self, x, y):
-        # if len(self.pixels)
-        pass
+        return 0 <= x < len(self.pixels) and 0 <= y < len(self.pixels[x])
 
 
 class Solution2(Canvas):
-    # TODO write documentation
+    """
+    In case if we can't use additional data structure we can take advantage of recursion.
+    Instead of putting neighbours into queue
+    we call the same function recursively with new coordinates as arguments.
+    The rest logic is the same as Solution1
+    """
 
     def fill(self, x, y, color):
-        pass  # TODO write implementation
+
+        pixel = self.pixels[x][y]
+        if pixel == color:
+            return
+        initial_color = pixel
+
+        self.pixels[x][y] = color
+
+        for n_x, n_y in [(x, y-1), (x, y+1), (x-1, y), (x+1, y)]:
+            if self._has_pixel_at(n_x, n_y) and self.pixels[n_x][n_y] == initial_color:
+                self.fill(n_x, n_y, color)
+
+    def _has_pixel_at(self, x, y):
+        return len(self.pixels) > x >= 0 and len(self.pixels[x]) > y >= 0
 
 
 def test_solution(impl):
