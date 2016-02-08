@@ -15,9 +15,7 @@ class MinHeap(object):
         return self.items[1]
 
     def delete(self, element):
-        index = 1
-        while index < self.count and self.items[index] != element:
-            index += 1
+        index = self.items.index(element)
 
         if index == self.count:
             self.items.pop()
@@ -26,7 +24,6 @@ class MinHeap(object):
             self.count -= 1
             self.items[index] = self.items.pop()
             self._sink(index)
-
 
     def _sink(self, index=None):
         index = 1 if index is None else index
@@ -42,9 +39,9 @@ class MinHeap(object):
 
     def _swim(self, index=None):
         index = self.count if index is None else index
-        while index > 1 and self.items[index / 2] > self.items[index]:
-            self._swap(index, index / 2)
-            index /= 2
+        while index > 1 and self.items[index // 2] > self.items[index]:
+            self._swap(index, index // 2)
+            index //= 2
 
     def _swap(self, i, j):
         t = self.items[i]
@@ -53,10 +50,10 @@ class MinHeap(object):
 
 
 def main():
-    number_of_queries = int(raw_input())
+    number_of_queries = int(input())
     min_heap = MinHeap()
     while number_of_queries > 0:
-        inp = raw_input().split()
+        inp = input().split()
         if inp[0] == "1":
             min_heap.insert(int(inp[1]))
         elif inp[0] == "2":
