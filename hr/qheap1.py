@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 class MinHeap(object):
 
     def __init__(self):
