@@ -8,7 +8,7 @@ def _internal_sort(array, lo, hi):
     _internal_sort(array, in_place+1, hi)
 
 
-def _partition(array, lo, hi):
+def partition(array, lo, hi):
     pivot = array[lo+(hi-lo)/2]
     i = lo
     j = hi
