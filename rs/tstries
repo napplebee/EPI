@@ -1,0 +1,145 @@
+# **
+#  *  The <tt>TST</tt> class represents an symbol table of key-value
+#  *  pairs, with string keys and generic values.
+#  *  It supports the usual <em>put</em>, <em>get</em>, <em>contains</em>,
+#  *  <em>delete</em>, <em>size</em>, and <em>is-empty</em> methods.
+#  *  It also provides character-based methods for finding the string
+#  *  in the symbol table that is the <em>longest prefix</em> of a given prefix,
+#  *  finding all strings in the symbol table that <em>start with</em> a given prefix,
+#  *  and finding all strings in the symbol table that <em>match</em> a given pattern.
+#  *  A symbol table implements the <em>associative array</em> abstraction:
+#  *  when associating a value with a key that is already in the symbol table,
+#  *  the convention is to replace the old value with the new value.
+#  *  Unlike {@link java.util.Map}, this class uses the convention that
+#  *  values cannot be <tt>null</tt>&mdash;setting the
+#  *  value associated with a key to <tt>null</tt> is equivalent to deleting the key
+#  *  from the symbol table.
+#  *  <p>
+#  *  This implementation uses a ternary search trie.
+#  *  <p>
+#  *  For additional documentation, see <a href="http://algs4.cs.princeton.edu/52trie">Section 5.2</a> of
+#  *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+#  */
+
+
+class Node(object):
+    c = None # character
+    # left, middle, and right subtries
+    left = None
+    mid = None
+    right = None
+    # value associated with string
+    val = None
+
+
+class TernarySearTrie(object):
+    def __init__(self):
+        # size of trie
+        self.count = 0
+        self.root = None
+
+    def contains(self, key):
+        return self.get(key) is not None
+
+    def get(self, key):
+        if key is None:
+            raise ValueError()
+        if len(key) == 0:
+            raise ValueError("key must have length >= 1")
+
+        x = self.get(self.root, key, 0)
+        if x is None:
+            return None
+        return x.val
+
+    def _get(self, node, key, d):
+        if key is None:
+            raise ValueError()
+        if len(key) == 0:
+            raise ValueError("key must have length >= 1");
+
+        if node is None:
+            return None
+        c = key[d]
+        if c < node.c:
+            return self._get(node.left, key, d)
+        elif c > node.c:
+            return self._get(node.right, key, d)
+        elif d < len(key) - 1:
+            return self._get(node.mid, key, d+1)
+        else:
+            return node
+
+    def put(self, key, val):
+        if not self.contains(key):
+            self.count += 1
+
+        self.root = self._put(self.root, key, val, 0)
+
+    def _put(self, node, key, val, d):
+        c = key[d]
+        if node is None:
+            node = Node()
+            node.c = c;
+
+        if c < node.c:
+            node.left  = self._put(node.left,  key, val, d)
+        elif c > node.c:
+            node.right = self._put(node.right, key, val, d)
+        elif d < len(key) - 1:
+            node.mid = self._put(node.mid, key, val, d+1)
+        else:
+            node.val = val
+        return node
+
+    def longest_prefix_of(self, query):
+        if query is None or len(query) == 0:
+            return None
+        length = 0
+        node = self.root
+        i = 0
+        while x is not None and i < len(query):
+            c = query[i]
+            if c < node.c:
+                node = node.left
+            elif c > node.c:
+                node = node.right
+            else:
+                i += 1
+                if node.val is not None:
+                    length = i
+                node = node.mid
+        return query[0:length]
+
+    def keys(self):
+        import Queue as q
+        queue = q.Queue()
+        self.collect(self.root, "", queue)
+        return queue
+
+    def collect(self, node, prefix, queue):
+        """
+        all keys in subtrie rooted at x with given prefix
+        """
+        if node is None:
+            return
+        self.collect(node.left,  prefix, queue)
+
+        if node.val is not None:
+            queue.enqueue(prefix + node.c)
+
+        self.collect(node.mid, prefix + node.c, queue)
+        # delete last character from prefix
+        prefix = prefix[0:-1]
+        self.collect(node.right, prefix, queue)
+
+    def keys_with_prefix(self, prefix):
+        import Queue as q
+        queue = q.Queue()
+        node = self._get(self.root, prefix, 0)
+        if node is None:
+            return queue
+        if node.val is not None:
+            queue.enqueue(prefix)
+        collect(node.mid, prefix, queue)
+        return queue
