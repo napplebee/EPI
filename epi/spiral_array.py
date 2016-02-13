@@ -2,85 +2,75 @@
 
 
 def print_spiral(array):
-    result = list()
-    len_y = len(array)-1
-    len_x = len(array[0])-1
-    number_of_elements = len_x*len_y
-    increments = [(1, 0), (0, -1), (-1, 0), (0, 1)]
-    inc_index = 0
-
-    index_bounds = [len_x-1, 0, len_y-1, 1]
-    bound_peeker = 0 # 0 -- straight, 1 -- reverse
-
-    x, y = 0, 0
-    inc_x, inc_y = increments[inc_index % 4]
-    max_x = index_bounds[bound_peeker % 4]
-    max_y = index_bounds[(bound_peeker + 2) % 4]
+    x = len(array[0])
+    y = len(array)
+    max_bounds = {
+        "right": x-1,
+        "down": y-1,
+        "left": 0,
+        "up": 1
+    }
+    number_of_elements = x*y
+    coord = (0, -1)
+    func = go_right
+    result = []
     while number_of_elements > 0:
-        if x > max_x or y > max_y:
-            inc_index += 1
-            bound_peeker += 1
-
-            inc_x, inc_y = increments[inc_index % 4]
-            if x > max_x:
-                max_x = index_bounds[bound_peeker % 4] = index_bounds[bound_peeker % 4] + inc_x
-            if y > max_y:
-                max_y = index_bounds[(bound_peeker + 2) % 4] = index_bounds[(bound_peeker + 2) % 4] + inc_y
-            x, y = y, x
-
-        result.append(array[x][y])
-        x += inc_x
-        y += inc_y
-        number_of_elements -= 1
-
+        number, func, coord = func(array, coord, max_bounds, result)
+        number_of_elements -= number
     print(", ".join(map(str, result)))
 
 
-def print_spiral_v2(array):
-    x = len(array[0])
-    y = len(array)
-    increment = {
-        "right": go_right,
-        "down": go_down,
-        "left": go_left,
-        "up": go_up
-    }
-    max_bounds = {
-
-    }
-    number_of_elements = x*y§
-    while number_of_elements > 0:
-        pass
-    x, y = y, x
-    pass
-
-
-def go_right(array, coord, maximum):
+def go_right(array, coord, maximum, result):
+    elements = 0
     increment = 1
     y, x = coord
-    while x < maximum:
-        yield array[y][x]
+    x += increment
+    while x <= maximum["right"]:
+        result.append(array[y][x])
         x += increment
+        elements += 1
+    maximum["right"] -= 1
+    return elements, go_down, (y, x-increment)
 
 
-def go_down(array, coord, maximum):
+def go_down(array, coord, maximum, result):
+    elements = 0
     increment = 1
     y, x = coord
-    while y < maximum:
-        yield array[y][x]
+    y += increment
+    while y <= maximum["down"]:
+        result.append(array[y][x])
         y += increment
+        elements += 1
+    maximum["down"] -= 1
+    return elements, go_left, (y-increment, x)
 
 
-def go_left(array, coord, minimum):
+def go_left(array, coord, minimum, result):
+    elements = 0
     increment = -1
     y, x = coord
-    while x > minimum:
-        yield array[y][x]
+    x += increment
+    while x >= minimum["left"]:
+        result.append(array[y][x])
         x += increment
+        elements += 1
+    minimum["left"] += 1
+    return elements, go_up, (y, x-increment)
 
 
-def go_up(array, coord, minimum):
-    pass
+def go_up(array, coord, minimum, result):
+    elements = 0
+    increment = -1
+    y, x = coord
+    y += increment
+    while y >= minimum["up"]:
+        result.append(array[y][x])
+        y += increment
+        elements += 1
+    minimum["up"] += 1
+    return elements, go_right, (y-increment, x)
+
 
 def generate_input(n, m):
     import random as rnd
