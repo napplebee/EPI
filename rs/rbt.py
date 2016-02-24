@@ -5,13 +5,14 @@
 RED = True
 BLACK = False
 
+
 class Node(object):
     key = None
-    value = None # associated data
+    value = None  # associated data
     left = None
     right = None
-    color = None #color of parent link
-    count = None# subtree count
+    color = None  #color of parent link
+    count = None  # subtree count
 
     def __init__(self, key, value, color, count):
         self.key = key;
@@ -156,7 +157,6 @@ class RedBlackBST(object):
         if not self.is_empty():
             self.root.color = BLACK;
 
-
     def _deleteMax(self, node):
         """
         delete the key-value pair with the maximum key rooted at h
@@ -194,7 +194,7 @@ class RedBlackBST(object):
 
     def _delete(self, node, key):
         """
-        delete the key-value pair with the given key rooted at h
+        delete the key-value pair with the given key rooted at node
         """
         if key < node.key:
             if not self.isRed(node.left) and not self.isRed(node.left.left):
