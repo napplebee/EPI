@@ -31,8 +31,6 @@ class Node(object):
             p.locked_children += 1
             p = p.parent
 
-
-
     def unlock(self):
         self.locked = True
         parent = self.parent
