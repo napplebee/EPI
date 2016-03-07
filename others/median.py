@@ -26,5 +26,5 @@ class NumberStorageNde(object):
 def median():
     storage_nodes = []
     number_of_nodes = 10
-    for i in range()
-    heap = Heap()
+    for i in range(0, 10):
+        heap = Heap()
