@@ -1,7 +1,7 @@
 class Problem4(object):
     N = None
-    M = None
     items = []
+    result = 0 # default output
     """
     Sum of 2 numbers in an array
     Identify whether there exists a pair of numbers in an array such that their sum is equal to N.
@@ -17,15 +17,29 @@ class Problem4(object):
 
     def read_input(self):
         self.N = int(raw_input("N:"))
-        self.M = int(raw_input("M:"))
-        for _ in range(0, self.M):
+        M = int(raw_input("M:"))
+        for _ in range(0, M):
             self.items.append(int(raw_input()))
 
     def output(self):
-        pass
+        self.naive_impl()
+        print self.result
+
+    def naive_impl(self):
+        i = 0
+        l = len(self.items)
+        while i <= l - 2:
+            num = self.N - self.items[i]
+            k = i+1
+            while k <= i - 1:
+                if self.items[k] == num:
+                    self.result = 1
+                    return
+                k += 1
+            i += 1
 
 
-if __name__ == "__main__":
+def test():
     p = Problem4()
     p.read_input()
     p.output()
