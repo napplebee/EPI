@@ -1,6 +1,6 @@
 
 def main():
-    from epi.symmetric_tree import test
+    from epi.swap_bits import test
     test()
     print("Cya!")
 
