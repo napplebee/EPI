@@ -1,6 +1,6 @@
 
 def main():
-    from epi.swap_bits import test
+    from epi.powerset import test
     test()
     print("Cya!")
 
