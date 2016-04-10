@@ -3,29 +3,25 @@ import random as rnd
 
 
 def swap_bits(number, i, j):
-    i = 2
-    print i, ":",j
-    bin_as_arr = [0]*64
-    _bin = bin(number)
-    idx = 0
-    while number > 0:
-        bin_as_arr[idx] = number & 1
-        number >>= 1
-        idx+=1
-    original = "".join(map(str, bin_as_arr))
-    _ = bin_as_arr[i]
-    bin_as_arr[i] = bin_as_arr[j]
-    bin_as_arr[j] = _
-    swapped = "".join(map(str, bin_as_arr))
-    print _bin
-    print original
-    print swapped
-    return original, swapped
+    original_bin = bin(number)
+    if (number >> i) & 1 == (number >> j) & 1:
+        return original_bin, original_bin
+
+    swapped = number ^ ((1 << i) | (1 << j))
+    swapped_bin = bin(swapped)
+    return original_bin, swapped_bin
 
 
 def test():
-    number = rnd.randint(10, 100000)
-    i, j = rnd.randint(0, 63), rnd.randint(0, 63)
-    a, b = swap_bits(number, i, j)
-    print "Swap bits for {0}".format(number)
-    print "Input: {0}, output: {1}".format(a, b)
+    inp = input("Number (r for random):")
+    if inp == "r":
+        number = rnd.randint(0, pow(2, 64) - 1)
+    else:
+        number = int(inp)
+    print "Enter swap positions for {0}".format(bin(number))
+    i = int(input("i:"))
+    j = int(input("j:"))
+    original, swapped = swap_bits(number, i, j)
+
+    print "O: {0}".format(original)
+    print "S: {0}".format(swapped)
