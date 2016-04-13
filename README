@@ -1,4 +1,1 @@
 My own try to get along with algorithms, e.g. problems from EPI, HackerRank, R. Sedgewick.
-Please note that I did my best to keep the code lang-agnostic
-    so sometimes it is not that pythonic and even not optimal (from Python perspective).
-But it should be easily portable to other lang.
