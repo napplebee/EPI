@@ -1,5 +1,5 @@
 # 8.5
-
+# http://www.tutorialspoint.com/data_structures_algorithms/tower_of_hanoi.htm
 
 def transfer(n, pegs, _from, _to, use):
     print "transfer({}, {}, {}, {}, {})".format(n, pegs, _from, _to, use)
