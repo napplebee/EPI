@@ -1,6 +1,6 @@
 
 def main():
-    from epi.dutch_national_flag import test
+    from epi.hanoi_tower import test
     test()
     print("Cya!")
 
