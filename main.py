@@ -1,6 +1,6 @@
 
 def main():
-    from epi.hanoi_tower import test
+    from epi.intersect_two_sorted_arrays import test
     test()
     print("Cya!")
 
