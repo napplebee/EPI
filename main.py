@@ -1,6 +1,6 @@
 
 def main():
-    from epi.bst_first_key_larger import test
+    from epi.binary_search_trees.reconstruct_from_sorted import test
     test()
     print("Cya!")
 
