@@ -1,6 +1,6 @@
 
 def main():
-    from epi.intersect_two_sorted_arrays import test
+    from epi.bst_first_key_larger import test
     test()
     print("Cya!")
 
