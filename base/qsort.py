@@ -9,8 +9,8 @@ def partition(ar, lo, hi):
     i = lo+1
     k = hi
     while True:
-        while ar[i] <= pivot: i+= 1
-        while ar[k] > pivot: k-= 1
+        while ar[i] <= pivot and i < hi: i+= 1
+        while ar[k] > pivot and k > lo: k-= 1
         if i >= k: break
         swap(ar, i, k)
     swap(ar, lo, k)
