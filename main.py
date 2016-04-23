@@ -1,6 +1,6 @@
 
 def main():
-    from epi.binary_search_trees.reconstruct_from_sorted import test
+    from others.median import test
     test()
     print("Cya!")
 
