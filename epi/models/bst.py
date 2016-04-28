@@ -2,16 +2,19 @@ class BST(object):
     left = None
     right = None
     value = None
+    parent = None
 
     def __init__(self, value, left=None, right=None):
         self.value = value
         self.right = right
         self.left = left
-
+        if right is not None:
+            right.parent = self
+        if left is not None:
+            left.parent = self
 
     def __repr__(self):
         return "[%s]" % self.value
-
 
     @staticmethod
     def add(root, value):
