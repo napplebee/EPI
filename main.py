@@ -1,6 +1,6 @@
 
 def main():
-    from others.median import test
+    from epi.binary_search_trees.constant_mem_traverse import test
     test()
     print("Cya!")
 
