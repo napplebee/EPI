@@ -1,12 +1,15 @@
+from epi.models.bst import BST
+
+
 def traverse(node):
     if node is None:
         return
     prev = None
-    curr = None
+    curr = node
     next_ = None
     while curr is not None:
         if prev is None or prev.left == curr or prev.right == curr:
-            if 1:
+            if curr.left is not None:
                 next_ = curr.left
             else:
                 print curr.value
@@ -22,4 +25,7 @@ def traverse(node):
 
 
 def test():
-    pass
+    r = BST(5, BST(1), BST(6, BST(12), BST(55)))
+
+    traverse(r)
+    print ""
